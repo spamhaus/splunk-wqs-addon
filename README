@@ -1,0 +1,36 @@
+> NOTE:
+> This repository contains the `Spamhaus Datasets for Splunk` plugin code in it's the latest revision (1.0.2)
+> 
+> The plugin has been tested with Splunk Enterprise up to version 8.2.
+> 
+> As of June 2022, this plugin is being retired and won't be maintained or supported by Spamhaus Technology Ltd. However, it has been published and made open source under the Apache License so that customers can download it, customize it to their unique needs, and access the data.
+
+Spamhaus Datasets for Splunk provides a custom search command enabling you to query IPs and host names within your Splunk data easily to see if they're known to be connected with abused internet resources, as observed by Spamhaus.
+
+There are multiple use cases, including (a) the ability to detect if suspicious log entries in your systems are being caused by IPs known to be part of a botnet and (b) investigating if unexplained HTTP traffic is trying to reach an IP/hostname known to be controlling botnets.
+
+Users must subscribe to the Spamhaus Data Query Service (DQS) to utilize this data. This service is FREE for low-volume users; simply complete the sign-up form at: https://www.spamhaus.com/free-trial/sign-up-for-a-free-data-query-service-account/
+
+Current available datasets include: AuthBL, Domain Blocklist (DBL), Policy Blocklist (PBL), Spamhaus Blocklist (SBL), Exploits Blocklist (XBL), ZEN (a single list containing SBL, PBL  & XBL combined), and Zero Reputation Domains (ZRD).
+
+example usage of the command: |spamhaus dataset="authbl" check_field
+
+The "check_field" illustrated in the example above is a field created in your Splunk search. You should enter the field name of the dataset that you require checking against the Spamhaus API.
+
+
+## Lookups ##
+There are already lookups available that you can use to enrich the numeric information from the WQS response.
+
+Check out:
+| lookup spamhaus_status_codes status
+| lookup spamhaus_response resp
+
+
+## Installation ##
+You can install the app by using the ordinary Splunk installation mechanism. After that, you have to configure the app. Therefore a setup page is available. You will find it in "manage apps" in the actions column.
+
+Alternatively you can access the setup by accessing this URL: http://<splunk-address>/en-GB/manager/SA-Spamhaus-datasets/apps/local/SA-Spamhaus-datasets/setup?action=edit
+
+The token/key for the Spamhaus Data Query Service has to be entered here (e.g.: Bearer xxxxxx). If required in your network, you can configure a proxy server.
+
+This app should be installed on Search Heads.
